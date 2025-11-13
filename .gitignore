@@ -1,0 +1,9 @@
+# Streamlit secrets
+.streamlit/secrets.toml
+__pycache__
+*.pyc
+*.pyo
+*.json
+*.env
+*.txt
+data/memory/conversation_history.json
