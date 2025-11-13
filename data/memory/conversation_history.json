@@ -1,0 +1,34 @@
+[
+  {
+    "role": "user",
+    "content": "What did Mark Packer said in Rule 26 of Case Specific?"
+  },
+  {
+    "role": "assistant",
+    "content": "\"No supporting reference found in the provided materials.\""
+  },
+  {
+    "role": "user",
+    "content": "What did Mark Packer say in Rule 26 of Case Specific?"
+  },
+  {
+    "role": "assistant",
+    "content": "\"No supporting reference found in the provided materials.\""
+  },
+  {
+    "role": "user",
+    "content": "What Mark Packer said in Rule 26 Case Specific?"
+  },
+  {
+    "role": "assistant",
+    "content": "\"No supporting reference found in the provided materials.\""
+  },
+  {
+    "role": "user",
+    "content": "Mark Packer"
+  },
+  {
+    "role": "assistant",
+    "content": "\"No supporting reference found in the provided materials.\""
+  }
+]
