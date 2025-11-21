@@ -41,3 +41,5 @@ langchain-openai
 # Visualization
 plotly
 pandas
+
+google-cloud-storage
