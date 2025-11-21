@@ -5,6 +5,8 @@ from typing import List, Dict
 import numpy as np
 import faiss
 import json
+from google.cloud import storage
+from google.oauth2 import service_account
 import streamlit as st
 from prompts.builder import *
 from sentence_transformers import SentenceTransformer
@@ -18,11 +20,11 @@ import tempfile
 # ====================== CONFIG ======================
 OPENAI_API_KEY = st.secrets["openai"]["api_key"]
 #GEMINI_API_KEY = st.secrets["gemini"]["api_key"]
+GCS_SERVICE_ACCOUNT = st.secrets["gcp"]
 
 GCS_BUCKET_NAME = "themis-kd-1"
 GCS_METADATA_DB = "metadata.db"
 GCS_FAISS_FILE = "index.faiss"
-GCS_SERVICE_ACCOUNT = "data/service-account.json"
 
 # ====================== MODEL ======================
 @st.cache_resource
@@ -41,7 +43,9 @@ def load_metadata_from_gcs() -> List[Dict]:
     Download metadata.db from GCS, read SQLite, convert to documents list.
     """
     # Initialize GCS client
-    client = storage.Client.from_service_account_json(GCS_SERVICE_ACCOUNT)
+    credentials = service_account.Credentials.from_service_account_info(GCS_SERVICE_ACCOUNT)
+    client = storage.Client(credentials=credentials, project=GCS_SERVICE_ACCOUNT["project_id"])
+
     bucket = client.bucket(GCS_BUCKET_NAME)
     blob = bucket.blob(GCS_METADATA_DB)
 
@@ -97,9 +101,11 @@ def load_faiss_from_gcs(bucket_name: str, file_name: str) -> faiss.Index:
     Windows-safe using tempfile.
     """
     # Initialize GCS client
-    client = storage.Client.from_service_account_json(GCS_SERVICE_ACCOUNT)
-    bucket = client.bucket(bucket_name)
-    blob = bucket.blob(file_name)
+    credentials = service_account.Credentials.from_service_account_info(GCS_SERVICE_ACCOUNT)
+    client = storage.Client(credentials=credentials, project=GCS_SERVICE_ACCOUNT["project_id"])
+
+    bucket = client.bucket(GCS_BUCKET_NAME)
+    blob = bucket.blob(GCS_FAISS_FILE)
 
     # Windows-safe temp file
     fd, tmp_path = tempfile.mkstemp(suffix=".faiss")
