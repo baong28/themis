@@ -2,13 +2,8 @@
 
 ## Overview
 ```
-    **Themis** is an AI-powered legal discovery assistant designed to help professionals at Kirkendall Dwyer Law navigate research, analyze documents, and gain actionable insights.  
-    The system offers two modes:
-
-    - **Themis (Legal Discovery):** Focused on legal case context and discovery tasks.  
-    - **Athena (Research Insight):** General research assistant for broader inquiries.
-
-    Built with **Streamlit**, Themis provides a conversational interface for easy interaction.
+    Themis is an AI-powered legal discovery assistant designed to help professionals at law firm  navigate research, analyze documents, and gain actionable insights.  
+    Built with Streamlit, Themis provides a conversational interface for easy interaction.
 
 ```
 
