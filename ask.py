@@ -172,58 +172,6 @@ def query_similar_documents(query: str, index, embeddings_model, documents: List
         })
     return results
 
-# ======================
-# 💬 ASK (to OpenAI)
-# ======================
-# def ask(question: str):
-#     """
-#     Send the question to OpenAI with relevant FAISS context.
-#     """
-#     if not os.path.exists(INDEX_PATH) or not os.path.exists(SQLITE_DB_PATH):
-#         raise FileNotFoundError("❌ FAISS index or SQLite metadata missing.")
-
-#     # Load FAISS index
-#     index = faiss.read_index(INDEX_PATH)
-
-#     # Load metadata from SQLite
-#     documents = load_metadata_from_sqlite()
-#     if not documents:
-#         print("⚠️ No documents found in SQLite metadata.")
-#         return "No documents available."
-
-#     # Retrieve relevant context
-#     context_docs = query_similar_documents(
-#         query=question,
-#         index=index,
-#         embeddings_model=embedding_model,
-#         documents=documents,
-#         top_k=8
-#     )
-
-#     # Build citation section
-#     citations = []
-#     for d in context_docs:
-#         meta = d["metadata"]
-#         citations.append(f"Citation: {meta['bates']} (Page {meta['page']})\nSource: {meta['source']}")
-
-#     citation_text = "\n\n".join(citations)
-#     context_texts = [d["content"] for d in context_docs]
-
-#     # Build prompt
-#     prompt = build_prompt(question, context_texts)
-#     prompt += "\n\n---\n" + citation_text
-
-#     # Query OpenAI
-#     response = client.chat.completions.create(
-#         model="gpt-4o-mini",
-#         messages=[
-#             {"role": "system", "content": "You are Themis – a Legal Discovery Assistant."},
-#             {"role": "user", "content": prompt}
-#         ]
-#     )
-
-#     return response.choices[0].message.content.strip()
-
 # ====================== ASK ======================
 def ask(question):
     # Load metadata
@@ -258,4 +206,5 @@ def ask(question):
         ]
     )
     return response.choices[0].message.content.strip()
+
 
