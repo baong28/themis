@@ -2,8 +2,8 @@
 
 ## Overview
 
-Themis is an AI-powered legal discovery assistant designed to help professionals at a law firm navigate research, analyze documents, and gain actionable insights.  
-Built with **Streamlit**, Themis provides a conversational interface for easy interaction.
+***Themis*** is an AI-powered legal discovery assistant designed to help professionals at a law firm navigate research, analyze documents, and gain actionable insights.  
+Built with Streamlit, Themis provides a conversational interface for easy interaction.
 
 ## Features
 
