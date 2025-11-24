@@ -17,7 +17,7 @@ import pytesseract
 import sqlite3
 # Nếu Windows, set đường dẫn cụ thể nếu không trong PATH
 if sys.platform.startswith("win"):
-    pytesseract.pytesseract.tesseract_cmd = r"C:\Users\baong\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
+    pytesseract.pytesseract.tesseract_cmd = r"\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
 # ==============================
 # 🔧 1. CONFIGURATION
@@ -358,42 +358,6 @@ def load_documents_from_dropbox(incremental=True):
                 except Exception as e:
                     print(f"Error reading {entry.name}: {e}")
 
-                #     for page_num, page in enumerate(pdf, start=1):
-                #         try:
-                #             text = page.get_text("text")
-                #             if not text.strip():  # nếu không có text layer
-                #                 raise ValueError("No text layer, using OCR fallback.")
-                #         except Exception:
-                #             # OCR fallback
-                #             img = page.get_pixmap(dpi=200)
-                #             img_bytes = img.tobytes("png")
-                #             text = pytesseract.image_to_string(Image.open(io.BytesIO(img_bytes)), lang="eng")
-
-                #         text = clean_page_text(text)
-                #         if not text.strip():
-                #             continue
-
-                #         chunks = split_text(text, CHUNK_SIZE, CHUNK_OVERLAP)
-
-                #         for i, chunk in enumerate(chunks):
-                #             # Gán Bates ID và metadata
-                #             bates_id = f"{entry.name.replace('.pdf','').upper()}_{page_num:03d}_{i:02d}"
-                #             docs.append({
-                #                 "id": bates_id,
-                #                 "content": chunk,
-                #                 "metadata": {
-                #                     "source": os.path.basename(entry.path_display),
-                #                     "path": entry.path_display,
-                #                     "page": page_num,
-                #                     "bates_id": bates_id,
-                #                     "chunk_index": i,
-                #                     "custodian": None,
-                #                     "collection_id": os.path.basename(FOLDER_PATH)
-                #                 }
-                #             })
-                # except Exception as e:
-                #     print(f"⚠️ Error reading {entry.name}: {e}")
-
         if not response.has_more:
             break
         response = dbx.files_list_folder_continue(response.cursor)
@@ -451,26 +415,3 @@ def build_faiss_index():
     print(f"✅ Indexed {len(new_docs)} chunks from {len(set(d['metadata']['source'] for d in docs))} PDFs.")
     print(f"📁 SQLite metadata: {SQLITE_DB_PATH}")
     
-    # # merge metadata with existing metadata file (incremental)
-    # existing_docs = []
-    # if os.path.exists(META_PATH):
-    #     try:
-    #         with open(META_PATH, "rb") as f:
-    #             existing_docs = pickle.load(f).get("documents", [])
-    #     except Exception:
-    #         existing_docs = []
-
-    # new_docs = [{"page_content": t, "metadata": m} for t, m in zip(texts, metadatas)]
-    # merged = {"documents": existing_docs + new_docs}
-    # with open(META_PATH, "wb") as f:
-    #     pickle.dump(merged, f)
-
-    # print("✅ Indexed:")
-    # print(f"   - {len(new_docs)} chunks total")
-    # print(f"   - {len(set(d['metadata']['source'] for d in docs))} PDF files")
-    # print(f"   - Total metadata entries: {len(merged['documents'])}")
-    # print(f"📁 Index saved to: {INDEX_PATH}")
-    # print(f"📁 Metadata saved to: {META_PATH}")
-
-
-
